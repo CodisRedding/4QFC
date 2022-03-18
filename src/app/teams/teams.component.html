@@ -1,0 +1,79 @@
+<p-table [value]="teams" dataKey="id" responsiveLayout="scroll" sortMode="multiple" styleClass="p-datatable-striped" [multiSortMeta]="[{field: 'cost', order: -1},{field: 'avg_points', order: -1}, {field: 'last_5_avg_points', order: -1}, {field: 'last_3_avg_points', order: -1}]">
+  <ng-template pTemplate="header">
+      <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="cost">Cost <p-sortIcon field="cost"></p-sortIcon></th>
+          <th pSortableColumn="avg_points">Avg Points <p-sortIcon field="avg_points"></p-sortIcon></th>
+          <th pSortableColumn="last_5_avg_points">Last 5 Games Avg Points <p-sortIcon field="last_5_avg_points"></p-sortIcon></th>
+          <th pSortableColumn="last_3_avg_points">Last 3 Games Avg Points <p-sortIcon field="last_3_avg_points"></p-sortIcon></th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-team let-expanded="expanded">
+      <tr>
+          <td>
+              <button type="button" pButton pRipple [pRowToggler]="team" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td style="color: green;">{{team.cost | currency:'USD'}}</td>
+          <td>{{team.avg_points | number:'1.2-2' }}</td>
+          <td>{{team.last_5_avg_points | number:'1.2-2' }}</td>
+          <td>{{team.last_3_avg_points | number:'1.2-2' }}</td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-team>
+    <tr>
+        <td colspan="7">
+            <div class="p-3">
+                <p-table [value]="team.players" dataKey="id" sortMode="multiple" styleClass="p-datatable-striped" [multiSortMeta]="[{field: 'avg', order: -1},{field: 'last_5_avg', order: -1},{field: 'last_3_avg', order: -1}]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="name" style="text-align: center;">Name <p-sortIcon field="name"></p-sortIcon><p-columnFilter type="text" field="name" display="menu"></p-columnFilter></th>
+                            <th pSortableColumn="cost">Cost <p-sortIcon field="cost"></p-sortIcon></th>
+                            <th pSortableColumn="avg">Avg Points <p-sortIcon field="avg"></p-sortIcon></th>
+                            <th pSortableColumn="last_5_avg">Last 5 Games Avg Points <p-sortIcon field="last_5_avg"></p-sortIcon></th>
+                            <th pSortableColumn="last_3_avg">Last 3 Games Avg Points <p-sortIcon field="last_3_avg"></p-sortIcon></th>
+                            <th pSortableColumn="teamName">Team <p-sortIcon field="teamName"></p-sortIcon></th>
+                        </tr>
+                        <tr>
+                          <th>
+                            <p-columnFilter field="positionName" matchMode="equals" [showMenu]="false">
+                              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                  <p-dropdown [ngModel]="value" [options]="positions" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                                      <ng-template let-option pTemplate="item">
+                                          <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                      </ng-template>
+                                  </p-dropdown>
+                              </ng-template>
+                            </p-columnFilter>
+                          </th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-player>
+                        <tr>
+                            <td style="text-align: center;">
+                              <img [src]="'https://d1j2t3dnax9fm.cloudfront.net/media/mls_mls/players/' + player.id + '.png'" [alt]="player.name" width="80" class="shadow-4" /><br>
+                              {{player.name == '' ? '-' : player.name }}<br>
+                              {{player.positionName | lowercase}}
+                            </td>
+                            <td style="color: green;">{{player.cost | currency:'USD'}}</td>
+                            <td>{{player.avg | number:'1.2-2'}}</td>
+                            <td>{{player.last_5_avg | number:'1.2-2'}}</td>
+                            <td>{{player.last_3_avg | number:'1.2-2'}}</td>
+                            <td><img [src]="'https://d1j2t3dnax9fm.cloudfront.net/media/mls_mls/squads/logos/' + player.team.id + '.png'" [alt]="player.teamName" width="75" class="shadow-4" /></td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="6">There are no players. =(</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </td>
+    </tr>
+  </ng-template>
+</p-table>
