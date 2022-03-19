@@ -14,3 +14,5 @@ If you want to improve the team generator you can find it at https://github.com/
 # Run
 
 `ng serve`
+
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/1033604/159099109-7177bac3-89ff-43e8-a0a8-7d89c39bab71.png">
