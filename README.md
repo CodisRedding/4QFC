@@ -1,8 +1,10 @@
 
+Live Site: https://mls-fantasy-web-lwgpt.ondigitalocean.app/teams 
 
 UPDATES
 
-* March 18th, 2022: Added week-3.json results (^5k teams)
+* March 18th, 2022:8:30pm CST Added week-3.json results (more teams found)
+* March 18th, 2022:6:30pm CST Added week-3.json results (^5k teams)
 
 # Generated MLS Fantasy Teams 2022
 
